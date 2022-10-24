@@ -29,14 +29,13 @@ const images = [
 // Ora rimuoviamo i contenuti statici e usiamo l’array di oggetti letterali per popolare dinamicamente il carosello.
 // Al click dell'utente sulle frecce verso sinistra o destra, l'immagine attiva diventerà visibile e dovremo aggiungervi titolo e testo.
 
+
+// Dinamic Insert Images
 const currentPhoto = document.querySelector(".current-photo");
 const row = document.querySelector(".row");
 
+// Creating slide
 images.forEach((item) => {
-    currentPhoto.innerHTML = `
-    <h2 class="place">${item.title}</h2>
-    <p class="place-description">${item.text}</p>
-    <img src="${item.image}" alt="">`;
     row.innerHTML += `
     <div class="col">
         <div class="ms-card">
@@ -44,3 +43,22 @@ images.forEach((item) => {
         </div>
     </div>`
 });
+
+// Creating thumbs
+for (let i = 0; i < images.length; i++) {
+    const game = images[i];
+    currentPhoto.innerHTML += `
+    <h2 class="title">${game.title}</h2>
+    <p class="title-description">${game.text}</p>
+    <img class="" src="${game.image}" alt="">`;
+}
+
+// Start point
+const prevBtn = document.getElementById("previous-btn");
+const nextBtn = document.getElementById("next-btn");
+const currentThumb = document.getElementsByClassName("ms-card");
+const currentImage = document.getElementsByClassName("single-item");
+let currentPosition = 0;
+currentThumb[currentPosition].classList.add("active");
+console.log(currentThumb);
+currentImage[currentPosition].classList.add("active");

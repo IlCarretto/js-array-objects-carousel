@@ -14,16 +14,37 @@ img {
 
 /* MAIN */
 /* Current Img */
-.current-photo {
+.current-photo img {
     border: 1px solid black;
-    background-image: url(../img/01.webp);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    text-align: right;
     color: white;
+    position: relative;
+    display: block;
 }
 
+.title {
+    position: absolute;
+    z-index: 999;
+    right: 10px;
+    color: red;
+    text-align: right;
+}
+
+.title-description {
+    position: absolute;
+    z-index: 999;
+    right: 10px;
+    top: 40px;
+    color: red;
+    text-align: right;
+}
+
+.single-item {
+    display: none;
+}
+
+.single-item.active {
+    display: block;
+}
 /* Thumbnail section */
 .row {
     display: flex;
@@ -48,27 +69,28 @@ img {
 }
 
 /* Buttons */
-.previous-btn,
-.next-btn {
+#previous-btn,
+#next-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    background-color: rgba(240, 240, 240, 0.5);
     border-radius: 50%;
     width: 32px;
     height: 32px;
+    line-height: 32px;
     text-align: center;
     border: none;
-    opacity: .8;
 }
 
-.previous-btn {
+#previous-btn {
     left: 10px;
 }
 
-.next-btn {
+#next-btn {
     right: 10px;
 }
 
-button i {
+div i {
     color: #212529;
 }
