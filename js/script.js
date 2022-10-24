@@ -22,14 +22,6 @@ const images = [
     }
 ];
 
-// [*] Milestone 0:
-// Come nel primo carosello realizzato, focalizziamoci prima sulla creazione del markup statico: costruiamo il container e inseriamo l'immagine grande in modo da poter stilare lo slider.
-
-// [] Milestone 1:
-// Ora rimuoviamo i contenuti statici e usiamo l’array di oggetti letterali per popolare dinamicamente il carosello.
-// Al click dell'utente sulle frecce verso sinistra o destra, l'immagine attiva diventerà visibile e dovremo aggiungervi titolo e testo.
-
-
 // Dinamic Insert Images
 const currentPhoto = document.querySelector(".current-photo");
 const row = document.querySelector(".row");
@@ -41,24 +33,83 @@ images.forEach((item) => {
         <div class="ms-card">
             <img src="${item.image}" alt="">
         </div>
-    </div>`
+    </div>`;
 });
 
 // Creating thumbs
 for (let i = 0; i < images.length; i++) {
     const game = images[i];
     currentPhoto.innerHTML += `
-    <h2 class="title">${game.title}</h2>
-    <p class="title-description">${game.text}</p>
-    <img class="" src="${game.image}" alt="">`;
+    <div class="single-item">
+        <div class="game-description">
+            <h2 class="title">${game.title}</h2>
+            <p class="title-description">${game.text}</p>
+        </div>
+        <img class="" src="${game.image}" alt="">
+    </div>`;
 }
 
 // Start point
-const prevBtn = document.getElementById("previous-btn");
-const nextBtn = document.getElementById("next-btn");
+document.getElementById("previous-btn").addEventListener("click", thumbBackward);
+document.getElementById("next-btn").addEventListener("click", thumbForward);
+let currentPosition = 0;
 const currentThumb = document.getElementsByClassName("ms-card");
 const currentImage = document.getElementsByClassName("single-item");
-let currentPosition = 0;
 currentThumb[currentPosition].classList.add("active");
-console.log(currentThumb);
 currentImage[currentPosition].classList.add("active");
+
+// Autoplay
+const autoPlay = setInterval(thumbForward, 3000);
+
+
+// Cambiare immagine al click
+for (let i = 0; i < currentThumb.length; i++) {
+    const currentGame = currentThumb[i];
+    currentGame.addEventListener("click", function() {
+        currentThumb[currentPosition].classList.remove("active");
+        currentImage[currentPosition].classList.remove("active");
+
+        currentPosition = i;
+
+        currentThumb[currentPosition].classList.add("active");
+        currentImage[currentPosition].classList.add("active");
+    })
+}
+
+
+// FUNZIONI NON PURE
+// Funzione che manda avanti al click del bottone
+function thumbForward() {
+    // Rimuovere la classe dalla posizione attuale
+    currentThumb[currentPosition].classList.remove("active");
+    currentImage[currentPosition].classList.remove("active");
+
+    // Aggiungere +1 alla posizione attuale
+    if (currentPosition < images.length - 1) {
+        currentPosition++;
+    } else {
+        currentPosition = 0;
+    }
+
+    // Riaggiungere la classe alla nuova posizione
+    currentThumb[currentPosition].classList.add("active");
+    currentImage[currentPosition].classList.add("active");
+}
+
+// Funzione che manda indietro al click del bottone
+function thumbBackward() {
+    // Rimuovere la classe dalla posizione attuale
+    currentThumb[currentPosition].classList.remove("active");
+    currentImage[currentPosition].classList.remove("active");
+
+    // Aggiungere -1 alla posizione attuale
+    if (currentPosition > 0) {
+        currentPosition--;
+    } else {
+        currentPosition = images.length - 1;
+    }
+
+    // Riaggiungere la classe alla nuova posizione
+    currentThumb[currentPosition].classList.add("active");
+    currentImage[currentPosition].classList.add("active");
+}
